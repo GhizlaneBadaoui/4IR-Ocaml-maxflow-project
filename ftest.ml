@@ -31,8 +31,8 @@ let () =
 
   (*let graph = clone_nodes graph0 in*)
   (*let graph = gmap graph0 (fun a -> string_of_int(int_of_string(a)+2)) in*)
-  (*let graph = gmap (add_arc (gmap graph0 (fun a -> int_of_string(a))) 2 5 10) (fun a -> string_of_int(a)) in*)
-  let graph = gap_graph (gmap graph0 (fun a -> int_of_string(a))) in
+  let graph = gmap (add_arc (gmap graph0 (fun a -> int_of_string(a))) 2 5 10) (fun a -> string_of_int(a)) in
+  (*let graph = gap_graph (gmap graph0 (fun a -> int_of_string(a))) in*)
 
   (* Rewrite the graph that has been read. *)
   (*let () = write_file outfile graph in*)
