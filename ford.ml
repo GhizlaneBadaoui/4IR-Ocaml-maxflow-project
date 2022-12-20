@@ -36,7 +36,7 @@ let find_increased_chain gr id1 id2 =
 
 (*Pour ajouter le flot trouvé à l'arc s'il existe dans la chaine augmentante sinon il return le graohe initial*)
 let add_flow_to_arcs chain valu gr s t a = 
-  if ((List.mem s chain) && (List.mem t chain)) then (new_arc gr s t (a+valu)) else gr
+  if ((List.mem s chain) && (List.mem t chain)) then (new_arc gr s t (a+valu)) else (new_arc gr s t a)
 ;;
 
 let increase_flot gr chain valu = 
