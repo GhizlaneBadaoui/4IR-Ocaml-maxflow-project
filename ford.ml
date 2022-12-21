@@ -40,5 +40,5 @@ let add_flow_to_arcs chain valu gr s t a =
 ;;
 
 let increase_flot gr chain valu = 
-  e_fold (add_flow_to_arcs chain valu) empty_graph
+  e_fold gr (add_flow_to_arcs chain valu) empty_graph
 ;;
