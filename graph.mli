@@ -17,6 +17,8 @@ val empty_graph: 'a graph
  * @raise Graph_error if the id already exists. *)
 val new_node: 'a graph -> id -> 'a graph
 
+val delete_arc: 'a graph -> id -> id -> 'a graph 
+
 (* new_arc gr id1 id2 lbl  : adds an arc from node id1 to node id2 with label lbl
  * Both nodes must already exist in the graph.
  * If the arc already exists, its label is replaced by lbl. 

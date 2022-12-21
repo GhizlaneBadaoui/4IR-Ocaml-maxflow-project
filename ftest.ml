@@ -1,5 +1,7 @@
 open Gfile
 open Tools
+open Ford
+open Graph
     
 let () =
 
@@ -31,12 +33,19 @@ let () =
 
   (*let graph = clone_nodes graph0 in*)
   (*let graph = gmap graph0 (fun a -> string_of_int(int_of_string(a)+2)) in*)
-  let graph = gmap (add_arc (gmap graph0 (fun a -> int_of_string(a))) 2 5 10) (fun a -> string_of_int(a)) in
-  (*let graph = gap_graph (gmap graph0 (fun a -> int_of_string(a))) in*)
+  (*let graph = gmap (add_arc (gmap graph0 (fun a -> int_of_string(a))) 2 5 10) (fun a -> string_of_int(a)) in*)
+  let graph1 = gmap graph0 (fun a -> int_of_string(a)) in
+  let chain1 = find_increased_chain graph1 _source _sink in
+  let small = smallest_value graph1 chain1 100 in
+  (*let graph = add_flow_to_arcs chain1 small graph1 0 2 8 in
+  let ggraph = gmap graph (fun a -> string_of_int(a)) in*)
+  (*let graph = gmap (increase_flot graph1 chain1 small) (fun a -> string_of_int(a)) in*)
+  let graph2 = gmap (delete_arc graph1 0 3) (fun a -> string_of_int(a)) in
 
   (* Rewrite the graph that has been read. *)
-  (*let () = write_file outfile graph in*)
-  let () = export outfile graph in
+  let () = write_file outfile graph2 in
+  (*let () = export outfile graph in*)
+  (*let () = print_chain outfile chain1 in*)
 
   ()
 

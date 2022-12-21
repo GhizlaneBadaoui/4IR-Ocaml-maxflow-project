@@ -2,6 +2,7 @@ open Graph
 open Printf
     
 type path = string
+type chain =  id list
 
 (* Format of text files:
    % This is a comment
@@ -94,7 +95,13 @@ let export path gr =
    close_out ff ;
    ()
  
-
+let print_chain path chain =
+  let ff = open_out path in
+  fprintf ff "%% This is a chain.\n\n" ;
+  if (List.length chain)==0 then (fprintf ff "empty chain") else (List.iter (fun id -> fprintf ff "%d " id) chain);
+  fprintf ff "\n\n%% End of chain\n" ;
+  close_out ff ;
+  ()
 
 let from_file path =
 

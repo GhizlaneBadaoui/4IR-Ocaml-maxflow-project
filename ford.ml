@@ -20,25 +20,30 @@ let rec smallest_value gr chaine petit =
 
 (* renvoie toutes les chaines possibles d'un graphe ---> DONE*)
 let find_increased_chain gr id1 id2 = 
-  let rec aux id list_succ acu = 
+  let rec loop id liste_succ acu = 
     
-    if (List.mem id acu) then [] else
-      match  list_succ with
+    (*if (List.mem id acu) then [] else*)
+      match  liste_succ with
         | [] -> []
         | (x,b)::rest -> 
           if x = id2 then x::acu 
           else 
-            let res = (aux x (out_arcs gr x) (x::acu)) in
-            if res=[] then (aux id rest acu) else res
+            let res = (loop x (out_arcs gr x) (x::acu)) in
+              if res=[] then (loop id rest acu) else res
   in
-  List.rev (aux id1 (out_arcs gr id1) [id1])    
+  List.rev (loop id1 (out_arcs gr id1) [id1])    
 ;;
 
-(*Pour ajouter le flot trouvé à l'arc s'il existe dans la chaine augmentante sinon il return le graohe initial*)
-let add_flow_to_arcs chain valu gr s t a = 
-  if ((List.mem s chain) && (List.mem t chain)) then (new_arc gr s t (a+valu)) else (new_arc gr s t a)
+(*Pour ajouter le flot trouvé à l'arc s'il existe dans la chaine augmentante sinon il return le graphe initial*)
+let add_flow_to_arcs chaine value gr src tgt label = 
+  if ((List.mem src chaine) && (List.mem tgt chaine)) then 
+    if label<value then 
+      (new_arc gr src tgt (label+value)) 
+    else 
+      (delete_arc gr src tgt)
+  else (new_arc gr src tgt label)
 ;;
 
-let increase_flot gr chain valu = 
-  e_fold gr (add_flow_to_arcs chain valu) empty_graph
+let increase_flot gr chaine value = 
+  e_fold gr (add_flow_to_arcs chaine value) (clone_nodes gr)
 ;;
