@@ -10,4 +10,6 @@ val find_increased_chain :  int graph -> id -> id -> chain
 
 (*val gap_graph : int graph -> int graph //pas besoin*)
 
+val add_flow_to_arcs : chain -> int -> int graph -> id -> id -> int -> int graph
+
 val increase_flot : int graph -> chain -> int -> int graph

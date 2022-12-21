@@ -14,7 +14,7 @@ let label_of_arc gr id1 id2 =
 let rec smallest_value gr chaine petit =
   match chaine with 
   | [] -> petit
-  | x::y::[] ->  if (label_of_arc gr x y)<petit then (label_of_arc gr x y) else petit
+  | _::[] -> petit
   | x::y::rest -> if (label_of_arc gr x y)<petit then (smallest_value gr (y::rest) (label_of_arc gr x y)) else (smallest_value gr (y::rest) petit)
 ;;
 
