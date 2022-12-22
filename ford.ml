@@ -37,8 +37,12 @@ let find_increased_chain gr id1 id2 =
 (*Pour ajouter le flot trouvé à l'arc s'il existe dans la chaine augmentante sinon il return le graphe initial*)
 let add_flow_to_arcs chaine value gr src tgt label = 
   if ((List.mem src chaine) && (List.mem tgt chaine)) then 
-    if label<value then 
-      (new_arc gr src tgt (label+value)) 
+    if label>value then 
+        match (find_arc gr tgt src ) with
+        | None -> (new_arc gr tgt src value)
+        | Some a ->  let x = (label_of_arc gr tgt src) in 
+                     if ((x+value) >= label) then begin (delete_arc gr src tgt) (new_arc gr tgt src label) end 
+                     else (new_arc gr tgt src (x+value))
     else 
       (delete_arc gr src tgt)
   else (new_arc gr src tgt label)
