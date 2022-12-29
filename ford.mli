@@ -13,3 +13,5 @@ val find_increased_chain :  int graph -> id -> id -> chain
 val add_flow_to_arcs : chain -> int -> int graph -> id -> id -> int -> int graph
 
 val increase_flot : int graph -> chain -> int -> int graph
+
+val ford : int graph -> id -> id -> int graph
