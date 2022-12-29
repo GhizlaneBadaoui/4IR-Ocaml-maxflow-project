@@ -44,7 +44,7 @@ let add_flow_to_arcs chaine value gr src tgt label =
                      if ((x+value) >= label) then (new_arc (delete_arc gr src tgt) tgt src label) 
                      else (new_arc gr tgt src (x+value))
     else 
-      (delete_arc gr src tgt)
+      (new_arc (delete_arc gr src tgt) tgt src label)
   else (new_arc gr src tgt label)
 ;;
 
@@ -52,11 +52,16 @@ let increase_flot gr chaine value =
   e_fold gr (add_flow_to_arcs chaine value) (clone_nodes gr)
 ;;
 
-let rec ford gr src tgt = 
+
+
+let ford gr src tgt = 
+  let rec aux gr src tgt = 
   let chaine = find_increased_chain gr src tgt in 
-  if chaine = [] then gr else 
-    begin 
+  if chaine = [] then gr else
+    begin
       let small_val = smallest_value gr chain (label_of_arc gr (List.hd chain) (List.nth chain 1)) in
-      ford (increase_flot gr chaine small_val) src tgt
+      aux (increase_flot gr chaine small_val) src tgt
     end
+  in
+  e_fold (fun a b c d -> new_arc a c b d) (aux gr src tgt)
 ;;
