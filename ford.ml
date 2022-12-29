@@ -41,7 +41,7 @@ let add_flow_to_arcs chaine value gr src tgt label =
         match (find_arc gr tgt src ) with
         | None -> (new_arc gr tgt src value)
         | Some a ->  let x = (label_of_arc gr tgt src) in 
-                     if ((x+value) >= label) then begin (delete_arc gr src tgt) (new_arc gr tgt src label) end 
+                     if ((x+value) >= label) then (new_arc (delete_arc gr src tgt) tgt src label) 
                      else (new_arc gr tgt src (x+value))
     else 
       (delete_arc gr src tgt)
@@ -51,3 +51,4 @@ let add_flow_to_arcs chaine value gr src tgt label =
 let increase_flot gr chaine value = 
   e_fold gr (add_flow_to_arcs chaine value) (clone_nodes gr)
 ;;
+
