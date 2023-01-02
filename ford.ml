@@ -3,14 +3,14 @@ open Tools
 
 type chain =  id list
 
-(* renvoie la valeur d'un arc, il renvoie jamais 0, puisque l'arc de id1 vers id2 existe---> DONE*)
+(* renvoie la valeur d'un arc, il renvoie jamais 0, puisque l'arc de id1 vers id2 existe *)
 let label_of_arc gr id1 id2 = 
   match (find_arc gr id1 id2) with
   | None -> 0
   | Some x -> x  
 ;; 
 
-(* pour commencer : petit contient la première valeur de la chaine (on peut pas avoir une valeur inférieure à 0 )---> DONE*)
+(* petit contient la première valeur de la chaine (on peut pas avoir une valeur inférieure à 0 ) ou une valeur très grande *)
 let rec smallest_value gr chaine petit =
   match chaine with 
   | [] -> petit
@@ -18,11 +18,18 @@ let rec smallest_value gr chaine petit =
   | x::y::rest -> if (label_of_arc gr x y)<petit then (smallest_value gr (y::rest) (label_of_arc gr x y)) else (smallest_value gr (y::rest) petit)
 ;;
 
-(* renvoie toutes les chaines possibles d'un graphe ---> DONE*)
+(* renvoie le nombre d'occurences d'un élément dans une liste *)
+let rec occurences x l = 
+  match l with
+  | [] -> 0
+  | hd::rest -> if hd=x then 1+(occurences x rest) else (occurences x rest)
+;;
+
+(* renvoie toutes les chaines possibles d'un graphe *)
 let find_increased_chain gr id1 id2 = 
   let rec loop id liste_succ acu = 
     
-    (*if (List.mem id acu) then [] else*)
+    if (occurences id acu)>1 then [] else
       match  liste_succ with
         | [] -> []
         | (x,b)::rest -> 
@@ -34,7 +41,7 @@ let find_increased_chain gr id1 id2 =
   List.rev (loop id1 (out_arcs gr id1) [id1])    
 ;;
 
-(*Pour ajouter le flot trouvé à l'arc s'il existe dans la chaine augmentante sinon il return le graphe initial*)
+(* Pour ajouter le flot trouvé à l'arc s'il existe dans la chaine augmentante sinon on renvoie le graphe initial*)
 let add_flow_to_arcs chaine value gr src tgt label = 
   if ((List.mem src chaine) && (List.mem tgt chaine)) then 
     if label>value then 
@@ -53,15 +60,15 @@ let increase_flot gr chaine value =
 ;;
 
 
-
+(* fonction main : fait appel à  toutes les fonctions déjà définies *)
 let ford gr src tgt = 
   let rec aux gr src tgt = 
-  let chaine = find_increased_chain gr src tgt in 
-  if chaine = [] then gr else
-    begin
-      let small_val = smallest_value gr chain (label_of_arc gr (List.hd chain) (List.nth chain 1)) in
-      aux (increase_flot gr chaine small_val) src tgt
-    end
+    let chaine = find_increased_chain gr src tgt in 
+    if chaine=[] then gr else
+      begin
+        let small_val = smallest_value gr chaine (label_of_arc gr (List.hd chaine) (List.nth chaine 1)) in
+        aux (increase_flot gr chaine small_val) src tgt
+      end
   in
-  e_fold (fun a b c d -> new_arc a c b d) (aux gr src tgt)
+  e_fold gr (fun a b c d -> new_arc a c b d) (aux gr src tgt)
 ;;

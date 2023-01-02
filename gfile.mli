@@ -18,6 +18,8 @@ val write_file: path -> string graph -> unit
    https://algorithms.discrete.ma.tum.de/graph-algorithms/flow-ford-fulkerson/index_en.html
 *)
 
+(* print a chain *)
 val print_chain: path -> chain -> unit 
 
+(* generate a dot file *)
 val export: path -> string graph -> unit

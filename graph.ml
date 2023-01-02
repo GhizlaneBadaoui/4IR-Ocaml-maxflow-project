@@ -24,6 +24,7 @@ let new_node gr id =
   if node_exists gr id then raise (Graph_error ("Node " ^ string_of_int id ^ " already exists in the graph."))
   else (id, []) :: gr
 
+(* added *)
 let delete_arc gr id1 id2 = 
   let rec aux = function  
     | [] -> []
