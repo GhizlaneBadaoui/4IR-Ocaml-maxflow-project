@@ -46,7 +46,7 @@ let add_flow_to_arcs chaine value gr src tgt label =
   if ((List.mem src chaine) && (List.mem tgt chaine)) then 
     if label>value then 
         match (find_arc gr tgt src ) with
-        | None -> (new_arc gr tgt src value)
+        | None -> (new_arc (new_arc gr tgt src value) src tgt label)
         | Some a ->  let x = (label_of_arc gr tgt src) in 
                      if ((x+value) >= label) then (new_arc (delete_arc gr src tgt) tgt src label) 
                      else (new_arc gr tgt src (x+value))
@@ -55,20 +55,24 @@ let add_flow_to_arcs chaine value gr src tgt label =
   else (new_arc gr src tgt label)
 ;;
 
+
 let increase_flot gr chaine value = 
   e_fold gr (add_flow_to_arcs chaine value) (clone_nodes gr)
 ;;
 
-
 (* fonction main : fait appel à  toutes les fonctions déjà définies *)
 let ford gr src tgt = 
   let rec aux gr src tgt = 
-    let chaine = find_increased_chain gr src tgt in 
+    let chaine = find_increased_chain gr src tgt in
     if chaine=[] then gr else
-      begin
-        let small_val = smallest_value gr chaine (label_of_arc gr (List.hd chaine) (List.nth chaine 1)) in
-        aux (increase_flot gr chaine small_val) src tgt
-      end
+      let small_val = smallest_value gr chaine (label_of_arc gr (List.hd chaine) (List.nth chaine 1)) in 
+      aux (increase_flot gr chaine small_val) src tgt
   in
-  e_fold gr (fun a b c d -> new_arc a c b d) (aux gr src tgt)
+  let gr1 = (aux gr src tgt) in
+  let gr2 = e_fold gr1 (fun a b c d -> match (find_arc gr b c) with
+  | None -> new_arc a b c d
+  | Some x -> if x = d then new_arc a b c 0 else new_arc a b c d) (clone_nodes gr1) in 
+  e_fold gr2 (fun a b c d -> match (find_arc gr c b) with
+              | None -> new_arc a b c d
+              | Some x -> new_arc a c b d) (clone_nodes gr2)
 ;;

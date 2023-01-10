@@ -80,7 +80,6 @@ let read_comment graph line =
     failwith "from_file"
 
 
-(* generate a dot file *)
 let export path gr = 
    (* Open a write-file. *)
    let ff = open_out path in
@@ -104,6 +103,7 @@ let print_chain path chain =
   fprintf ff "\n\n%% End of chain\n" ;
   close_out ff ;
   ()
+
 
 let from_file path =
 

@@ -6,9 +6,10 @@ val label_of_arc : int graph -> id -> id -> int
 
 val smallest_value : int graph -> chain -> int -> int
 
-val occurences : int -> int list -> int
-
 val find_increased_chain :  int graph -> id -> id -> chain
+
+(*val gap_graph : int graph -> int graph //pas besoin*)
+val occurences : int -> int list -> int
 
 val add_flow_to_arcs : chain -> int -> int graph -> id -> id -> int -> int graph
 
