@@ -56,23 +56,30 @@ let add_flow_to_arcs chaine value gr src tgt label =
 ;;
 
 
-let increase_flot gr chaine value = 
-  e_fold gr (add_flow_to_arcs chaine value) (clone_nodes gr)
+let increase_flot gr chaine value =
+  e_fold gr (add_flow_to_arcs chaine value) (gr)
+;;
+
+
+let get_graph gap_gr gr = 
+  let gr_final = e_fold gap_gr (fun a b c d -> match (find_arc gr b c) with
+  | None -> new_arc a b c d
+  | Some x -> if x = d then match (find_arc a c b) with 
+                            |None -> new_arc a b c 0
+                            |Some x -> delete_arc a b c 
+                       else new_arc a b c d) (gap_gr) in 
+  e_fold gr_final (fun a b c d -> match (find_arc gr c b) with
+              | None -> new_arc a b c d
+              | Some x -> delete_arc (new_arc a c b d) b c ) (gr_final)
 ;;
 
 (* fonction main : fait appel à  toutes les fonctions déjà définies *)
 let ford gr src tgt = 
-  let rec aux gr src tgt = 
+  let rec aux gr src tgt =
     let chaine = find_increased_chain gr src tgt in
     if chaine=[] then gr else
       let small_val = smallest_value gr chaine (label_of_arc gr (List.hd chaine) (List.nth chaine 1)) in 
       aux (increase_flot gr chaine small_val) src tgt
   in
-  let gr1 = (aux gr src tgt) in
-  let gr2 = e_fold gr1 (fun a b c d -> match (find_arc gr b c) with
-  | None -> new_arc a b c d
-  | Some x -> if x = d then new_arc a b c 0 else new_arc a b c d) (clone_nodes gr1) in 
-  e_fold gr2 (fun a b c d -> match (find_arc gr c b) with
-              | None -> new_arc a b c d
-              | Some x -> new_arc a c b d) (clone_nodes gr2)
+  get_graph (aux gr src tgt) gr
 ;;
