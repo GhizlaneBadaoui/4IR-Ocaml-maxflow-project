@@ -1,0 +1,24 @@
+% This is a bipartite problem.
+% Applicant's number is 2.
+% Job's number is 4.
+
+n 20 300 0 
+n 200 300 1
+n 380 300 2
+n 380 200 3
+n 380 400 4
+n 380 100 5
+n 380 500 6
+n 560 100 7
+
+e 0 1 0 1
+e 0 2 1 1
+e 1 3 3 1
+e 1 6 4 1
+e 2 5 5 1
+e 3 7 6 1
+e 4 7 7 1
+e 5 7 8 1
+e 6 7 9 1
+
+% End of the bipartite problem.

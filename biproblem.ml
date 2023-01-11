@@ -1,6 +1,7 @@
 open Gfile
 open Tools
 open Ford
+open Bipartite
     
 let () =
 
@@ -30,9 +31,11 @@ let () =
   (* Open file *)
   let graph0 = from_file infile in
   let graph1 = gmap graph0 (fun a -> int_of_string(a)) in
-  let graph2 = ford graph1 _source _sink in
-  let graph3 = gmap graph2 (fun a -> string_of_int(a)) in
-  let () = export outfile graph3 in
 
-  ()
+  (* Afficher la solution *)
+  Printf.printf " \n ******* Nombre de jobs affectés est : %d ******** \n " (bipartiteMatching_result graph1 _source _sink) ;
+
+  (* Generer le graphe resultat *)
+  bipartiteMatching_graph graph1 _source _sink outfile
+;;
 
