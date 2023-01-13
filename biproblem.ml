@@ -33,7 +33,7 @@ let () =
   let graph1 = gmap graph0 (fun a -> int_of_string(a)) in
 
   (* Afficher la solution *)
-  Printf.printf " \n ******* Nombre de jobs affectés est : %d ******** \n " (bipartiteMatching_result graph1 _source _sink) ;
+  Printf.printf " >>>>>>>> Nombre de jobs affectés est : %d  \n\n\n " (bipartiteMatching_result graph1 _source _sink) ;
 
   (* Generer le graphe resultat *)
   bipartiteMatching_graph graph1 _source _sink outfile

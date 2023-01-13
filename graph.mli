@@ -17,6 +17,10 @@ val empty_graph: 'a graph
  * @raise Graph_error if the id already exists. *)
 val new_node: 'a graph -> id -> 'a graph
 
+(* -------------------- ADDED : ----------------------------------- 
+ * delete_arc gr id1 id2  : deletes the arc from node id1 to node id2 in graph gr.
+ * Node id1 must already exist.
+ * If the arc doesn't exist, the same graph gr will be returned.*)
 val delete_arc: 'a graph -> id -> id -> 'a graph 
 
 (* new_arc gr id1 id2 lbl  : adds an arc from node id1 to node id2 with label lbl
@@ -54,7 +58,6 @@ val n_iter_sorted: 'a graph -> (id -> unit) -> unit
   
 (* Fold on all (unsorted) nodes. You must remember what List.fold_left does. *)
 val n_fold: 'a graph -> ('b -> id -> 'b) -> 'b -> 'b
-
 
 (* Iter on all arcs (edges) *)
 val e_iter: 'a graph -> (id -> id -> 'a -> unit) -> unit

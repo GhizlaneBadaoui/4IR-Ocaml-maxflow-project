@@ -1,7 +1,11 @@
 open Graph
 open Printf
     
+
 type path = string
+
+(* -------------------- ADDED : ----------------------------------- 
+ * chain stores a list of ids *)
 type chain =  id list
 
 (* Format of text files:
@@ -9,7 +13,7 @@ type chain =  id list
 
    % A node with its coordinates (which are not used), and its id.
    n 88.8 209.7 0
-   n 408.9 183.0 1
+   n 408.9 183.0 1stockes
 
    % Edges: e source dest label id  (the edge id is not used).
    e 3 1 11 0 

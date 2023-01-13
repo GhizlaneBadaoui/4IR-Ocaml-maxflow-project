@@ -1,6 +1,6 @@
 % This is a bipartite problem.
-% Applicant's number is 2.
-% Job's number is 4.
+% Nombres des candidats est 2.
+% Nombre des jobs est 4.
 
 n 20 300 0 
 n 200 300 1

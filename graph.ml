@@ -24,14 +24,18 @@ let new_node gr id =
   if node_exists gr id then raise (Graph_error ("Node " ^ string_of_int id ^ " already exists in the graph."))
   else (id, []) :: gr
 
+
 let delete_arc gr id1 id2 = 
+    (* Delete id2 from list of outgoing arcs of id1, if id2 exists in this list *)
     let rec aux = function  
       | [] -> []
       | (x,b)::rest -> if x=id2 then rest else (x,b)::(aux rest)    
       in 
   
+    (* List of outgoing arcs of id1 except id2 *)
     let list_outs = (aux (out_arcs gr id1)) in
     
+    (* Removing id1 from the graph gr and add the node with its new list of outgoing arcs *)
     let gr2 = List.remove_assoc id1 gr in
     (id1, list_outs) :: gr2
 ;;  

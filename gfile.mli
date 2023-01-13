@@ -18,7 +18,10 @@
     https://algorithms.discrete.ma.tum.de/graph-algorithms/flow-ford-fulkerson/index_en.html
  *)
  
- (* print a chain *)
+ (* -------------------- ADDED : ----------------------------------- 
+  * print_chain pth ch : prints the chain ch in the path pth *)
  val print_chain: path -> chain -> unit 
- 
+
+ (* -------------------- ADDED : ----------------------------------- 
+  * export pth gr : writes a string graph in dot format *)
  val export: path -> string graph -> unit
