@@ -1,5 +1,5 @@
 # OCaml project 
-By walid EL-ASSIMY & Ghizlane BADAOUI 
+By Walid EL-ASSIMY & Ghizlane BADAOUI 
 
 The code is organized into 5 modules (Graph, Gfile, Tools, Ford, Bipartite), two main files (ftest.ml and biproblem.ml) and a Makefile:
  - Graph: contains all functions related to graphs.
