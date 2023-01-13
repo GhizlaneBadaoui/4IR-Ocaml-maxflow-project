@@ -30,13 +30,15 @@ let () =
   (* Open file *)
   let graph0 = from_file infile in
 
-  (*let graph = clone_nodes graph0 in*)
-  (*let graph = gmap graph0 (fun a -> string_of_int(int_of_string(a)+2)) in*)
-  (*let graph = gmap (add_arc (gmap graph0 (fun a -> int_of_string(a))) 2 5 10) (fun a -> string_of_int(a)) in*)
-  (*let graph = gap_graph (gmap graph0 (fun a -> int_of_string(a))) in*)
+  (* Transforms the graph to int graph *)
   let graph1 = gmap graph0 (fun a -> int_of_string(a)) in
+
+  (* Applicates Ford-Fulkerson algorithm to graph1 *)
   let graph2 = ford graph1 _source _sink in
+
+  (* Transforms the graph to string graph *)
   let graph3 = gmap graph2 (fun a -> string_of_int(a)) in
+
   (* Rewrite the graph that has been read. *)
   (*let () = write_file outfile graph in*)
   let () = export outfile graph3 in

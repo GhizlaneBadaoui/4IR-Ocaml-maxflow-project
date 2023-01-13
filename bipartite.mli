@@ -1,12 +1,15 @@
 open Graph
 open Gfile
 
-
-(* retourne le nombre de jobs affectés aux candidats *)
+(* bipartiteMatching_result gr src tgt : returns the number of jobs assigned to candidates
+ * related to the graph gh, starting from the node src and ending by the node tgt *)
 val bipartiteMatching_result : int graph -> id -> id -> int
 
 
-(* rgenere le graphe solution du problème *)
+(* bipartiteMatching_graph gr src tgt pth : applicates Ford-Fulkerson algorithm to gr 
+ * + generates dot format in pth
+ * + displays the number of jobs assigned to candidates related to the graph gh, starting 
+ * from the node src and ending by the node tgt *)
 val bipartiteMatching_graph : int graph -> id -> id -> path -> unit
 
 
